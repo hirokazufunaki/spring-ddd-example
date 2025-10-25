@@ -1,5 +1,6 @@
 package com.example.springdddexample.infrastructure.persistence.jpa.adapter.user
 
+import com.example.springdddexample.domain.model.user.Email
 import com.example.springdddexample.domain.model.user.User
 import com.example.springdddexample.domain.model.user.UserId
 import com.example.springdddexample.domain.model.user.UserRepository

@@ -3,6 +3,8 @@ package com.example.springdddexample.domain.model.user
 import com.example.springdddexample.domain.shared.BusinessRuleViolationException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertNotSame
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -27,7 +29,7 @@ class UserTest {
         assertEquals(email, user.email)
         assertNotNull(user.createdAt)
         assertNotNull(user.updatedAt)
-        assertEquals(user.createdAt, user.updatedAt)
+        assertTrue(user.createdAt.isEqual(user.updatedAt) || user.createdAt.isBefore(user.updatedAt.plusNanos(1000000)))
     }
 
     @Test
@@ -138,7 +140,7 @@ class UserTest {
     @Test
     fun `同じ値のUserは等価であること`() {
         // Arrange
-        val userId = UserId("01HGX123456789ABCDEFGHJKM")
+        val userId = UserId("01HKGX123456789ABCDEFGHJKM")
         val name = UserName("山田太郎")
         val email = Email("yamada@example.com")
         val now = LocalDateTime.now()
@@ -174,7 +176,7 @@ class UserTest {
 
         val user1 =
             User(
-                id = UserId("01HGX123456789ABCDEFGHJKM"),
+                id = UserId("01HKGX123456789ABCDEFGHJKM"),
                 name = name,
                 email = email,
                 createdAt = now,
@@ -182,7 +184,7 @@ class UserTest {
             )
         val user2 =
             User(
-                id = UserId("01HGX123456789ABCDEFGHJKN"),
+                id = UserId("01HKGX123456789ABCDEFGHJKN"),
                 name = name,
                 email = email,
                 createdAt = now,

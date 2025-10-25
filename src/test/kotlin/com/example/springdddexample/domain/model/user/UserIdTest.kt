@@ -3,6 +3,7 @@ package com.example.springdddexample.domain.model.user
 import com.example.springdddexample.domain.shared.InvalidValueException
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -14,7 +15,7 @@ class UserIdTest {
     @Test
     fun `正常なULIDでUserIdが作成できること`() {
         // Arrange
-        val validUlid = "01HGX123456789ABCDEFGHJKM"
+        val validUlid = "01HKGX123456789ABCDEFGHJKM"
 
         // Act
         val userId = UserId(validUlid)
@@ -96,7 +97,7 @@ class UserIdTest {
     @Test
     fun `同じ値のUserIdは等価であること`() {
         // Arrange
-        val value = "01HGX123456789ABCDEFGHJKM"
+        val value = "01HKGX123456789ABCDEFGHJKM"
         val userId1 = UserId(value)
         val userId2 = UserId(value)
 
@@ -108,8 +109,8 @@ class UserIdTest {
     @Test
     fun `異なる値のUserIdは等価でないこと`() {
         // Arrange
-        val userId1 = UserId("01HGX123456789ABCDEFGHJKM")
-        val userId2 = UserId("01HGX123456789ABCDEFGHJKN")
+        val userId1 = UserId("01HKGX123456789ABCDEFGHJKM")
+        val userId2 = UserId("01HKGX123456789ABCDEFGHJKN")
 
         // Assert
         assertNotEquals(userId1, userId2)
