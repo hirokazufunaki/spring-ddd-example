@@ -17,7 +17,7 @@ src/
     ├── kotlin/
     │   └── com/
     │       └── example/
-    │           └── taskapp/
+    │           └── springdddexample/
     │               │
     │               ├── domain/                           # ドメイン層
     │               │   │
