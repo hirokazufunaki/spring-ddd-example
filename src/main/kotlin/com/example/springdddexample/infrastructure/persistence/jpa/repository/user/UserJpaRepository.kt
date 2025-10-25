@@ -10,19 +10,21 @@ import org.springframework.stereotype.Repository
  */
 @Repository
 interface UserJpaRepository : JpaRepository<UserJpaEntity, String> {
-    
     /**
      * メールアドレスでユーザーを検索
      */
     fun findByEmail(email: String): UserJpaEntity?
-    
+
     /**
      * メールアドレスの存在確認
      */
     fun existsByEmail(email: String): Boolean
-    
+
     /**
      * 指定されたIDを除外してメールアドレスの存在確認
      */
-    fun existsByEmailAndIdNot(email: String, id: String): Boolean
+    fun existsByEmailAndIdNot(
+        email: String,
+        id: String,
+    ): Boolean
 }

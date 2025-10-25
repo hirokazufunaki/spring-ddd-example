@@ -5,8 +5,9 @@ import com.example.springdddexample.domain.shared.InvalidValueException
 /**
  * ユーザー名値オブジェクト
  */
-data class UserName(val value: String) {
-    
+data class UserName(
+    val value: String,
+) {
     init {
         require(value.isNotBlank()) { "ユーザー名は空にできません" }
         if (value.length > 50) {

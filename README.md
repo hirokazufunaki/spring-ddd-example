@@ -36,7 +36,13 @@
 # カバレッジレポートの生成
 ./gradlew jacocoTestReport
 
-# テスト + カバレッジ検証
+# コードスタイルチェック
+./gradlew ktlintCheck
+
+# コード自動フォーマット
+./gradlew ktlintFormat
+
+# テスト + カバレッジ検証 + コード品質チェック
 ./gradlew check
 
 # プロジェクトのクリーン
@@ -70,6 +76,7 @@
 
 - **テストレポート**: `build/reports/tests/test/index.html`
 - **カバレッジレポート**: `build/reports/jacoco/test/html/index.html`
+- **Ktlintレポート**: `build/reports/ktlint/`
 
 ## ディレクトリ・ファイル構成
 

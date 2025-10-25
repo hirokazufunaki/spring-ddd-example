@@ -6,20 +6,26 @@ package com.example.springdddexample.domain.shared
  */
 abstract class DomainException(
     message: String,
-    cause: Throwable? = null
+    cause: Throwable? = null,
 ) : RuntimeException(message, cause)
 
 /**
  * ドメインオブジェクトが見つからない場合の例外
  */
-class NotFoundException(message: String) : DomainException(message)
+class NotFoundException(
+    message: String,
+) : DomainException(message)
 
 /**
  * ドメインビジネスルール違反の例外
  */
-class BusinessRuleViolationException(message: String) : DomainException(message)
+class BusinessRuleViolationException(
+    message: String,
+) : DomainException(message)
 
 /**
  * 無効な値オブジェクトの例外
  */
-class InvalidValueException(message: String) : DomainException(message)
+class InvalidValueException(
+    message: String,
+) : DomainException(message)

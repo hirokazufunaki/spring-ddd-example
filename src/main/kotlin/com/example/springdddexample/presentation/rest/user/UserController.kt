@@ -15,7 +15,14 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 /**
  * ユーザーREST API コントローラー
@@ -25,9 +32,8 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/users")
 @Tag(name = "ユーザー管理", description = "ユーザーの登録、参照、更新、削除を行うAPI")
 class UserController(
-    private val userApplicationService: UserApplicationService
+    private val userApplicationService: UserApplicationService,
 ) {
-    
     /**
      * ユーザーを作成する
      * POST /api/users
@@ -35,28 +41,30 @@ class UserController(
     @PostMapping
     @Operation(
         summary = "ユーザー作成",
-        description = "新しいユーザーを作成します"
+        description = "新しいユーザーを作成します",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "201",
                 description = "ユーザーが正常に作成されました",
-                content = [Content(schema = Schema(implementation = UserResponse::class))]
+                content = [Content(schema = Schema(implementation = UserResponse::class))],
             ),
             ApiResponse(
                 responseCode = "400",
                 description = "バリデーションエラーまたはビジネスルール違反",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            )
-        ]
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))],
+            ),
+        ],
     )
-    fun createUser(@Valid @RequestBody request: CreateUserRequest): ResponseEntity<UserResponse> {
+    fun createUser(
+        @Valid @RequestBody request: CreateUserRequest,
+    ): ResponseEntity<UserResponse> {
         val userResult = userApplicationService.createUser(request.toCommand())
         val response = UserResponse.from(userResult)
         return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
-    
+
     /**
      * ユーザーを取得する
      * GET /api/users/{id}
@@ -64,31 +72,31 @@ class UserController(
     @GetMapping("/{id}")
     @Operation(
         summary = "ユーザー取得",
-        description = "指定されたIDのユーザーを取得します"
+        description = "指定されたIDのユーザーを取得します",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "ユーザーが正常に取得されました",
-                content = [Content(schema = Schema(implementation = UserResponse::class))]
+                content = [Content(schema = Schema(implementation = UserResponse::class))],
             ),
             ApiResponse(
                 responseCode = "404",
                 description = "指定されたユーザーが見つかりません",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            )
-        ]
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))],
+            ),
+        ],
     )
     fun getUser(
         @Parameter(description = "ユーザーID", required = true)
-        @PathVariable id: String
+        @PathVariable id: String,
     ): ResponseEntity<UserResponse> {
         val userResult = userApplicationService.getUser(id)
         val response = UserResponse.from(userResult)
         return ResponseEntity.ok(response)
     }
-    
+
     /**
      * すべてのユーザーを取得する
      * GET /api/users
@@ -96,23 +104,23 @@ class UserController(
     @GetMapping
     @Operation(
         summary = "全ユーザー取得",
-        description = "登録されているすべてのユーザーを取得します"
+        description = "登録されているすべてのユーザーを取得します",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "ユーザーリストが正常に取得されました",
-                content = [Content(schema = Schema(implementation = Array<UserResponse>::class))]
-            )
-        ]
+                content = [Content(schema = Schema(implementation = Array<UserResponse>::class))],
+            ),
+        ],
     )
     fun getAllUsers(): ResponseEntity<List<UserResponse>> {
         val userResults = userApplicationService.getAllUsers()
         val responses = userResults.map { UserResponse.from(it) }
         return ResponseEntity.ok(responses)
     }
-    
+
     /**
      * ユーザーを更新する
      * PUT /api/users/{id}
@@ -120,37 +128,37 @@ class UserController(
     @PutMapping("/{id}")
     @Operation(
         summary = "ユーザー更新",
-        description = "指定されたIDのユーザー情報を更新します"
+        description = "指定されたIDのユーザー情報を更新します",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "200",
                 description = "ユーザーが正常に更新されました",
-                content = [Content(schema = Schema(implementation = UserResponse::class))]
+                content = [Content(schema = Schema(implementation = UserResponse::class))],
             ),
             ApiResponse(
                 responseCode = "400",
                 description = "バリデーションエラーまたはビジネスルール違反",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))],
             ),
             ApiResponse(
                 responseCode = "404",
                 description = "指定されたユーザーが見つかりません",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            )
-        ]
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))],
+            ),
+        ],
     )
     fun updateUser(
         @Parameter(description = "ユーザーID", required = true)
         @PathVariable id: String,
-        @Valid @RequestBody request: UpdateUserRequest
+        @Valid @RequestBody request: UpdateUserRequest,
     ): ResponseEntity<UserResponse> {
         val userResult = userApplicationService.updateUser(request.toCommand(id))
         val response = UserResponse.from(userResult)
         return ResponseEntity.ok(response)
     }
-    
+
     /**
      * ユーザーを削除する
      * DELETE /api/users/{id}
@@ -158,24 +166,24 @@ class UserController(
     @DeleteMapping("/{id}")
     @Operation(
         summary = "ユーザー削除",
-        description = "指定されたIDのユーザーを削除します"
+        description = "指定されたIDのユーザーを削除します",
     )
     @ApiResponses(
         value = [
             ApiResponse(
                 responseCode = "204",
-                description = "ユーザーが正常に削除されました"
+                description = "ユーザーが正常に削除されました",
             ),
             ApiResponse(
                 responseCode = "404",
                 description = "指定されたユーザーが見つかりません",
-                content = [Content(schema = Schema(implementation = ErrorResponse::class))]
-            )
-        ]
+                content = [Content(schema = Schema(implementation = ErrorResponse::class))],
+            ),
+        ],
     )
     fun deleteUser(
         @Parameter(description = "ユーザーID", required = true)
-        @PathVariable id: String
+        @PathVariable id: String,
     ): ResponseEntity<Void> {
         userApplicationService.deleteUser(id)
         return ResponseEntity.noContent().build()

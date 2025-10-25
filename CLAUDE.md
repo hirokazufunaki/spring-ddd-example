@@ -28,6 +28,12 @@
 - `./gradlew check` - テスト実行とカバレッジ検証を含む品質チェック
 - レポート場所: `build/reports/jacoco/test/html/index.html`
 
+### コード品質
+- `./gradlew ktlintCheck` - Ktlintによるコードスタイルチェック
+- `./gradlew ktlintFormat` - Ktlintによるコード自動フォーマット
+- `./gradlew ktlintApplyToIdea` - IntelliJ IDEAにKtlint設定を適用
+- Ktlintレポート場所: `build/reports/ktlint/`
+
 ## アーキテクチャ概要
 
 コードベースは関心の分離を厳密に行う階層化されたヘキサゴナルアーキテクチャに従います：

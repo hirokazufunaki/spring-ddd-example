@@ -14,10 +14,9 @@ import org.springframework.context.annotation.Configuration
  */
 @Configuration
 class OpenApiConfig {
-    
     @Bean
-    fun customOpenAPI(): OpenAPI {
-        return OpenAPI()
+    fun customOpenAPI(): OpenAPI =
+        OpenAPI()
             .info(
                 Info()
                     .title("Spring DDD Example API")
@@ -26,20 +25,17 @@ class OpenApiConfig {
                     .contact(
                         Contact()
                             .name("Spring DDD Example Team")
-                            .email("example@example.com")
-                    )
-                    .license(
+                            .email("example@example.com"),
+                    ).license(
                         License()
                             .name("MIT License")
-                            .url("https://opensource.org/licenses/MIT")
-                    )
-            )
-            .servers(
+                            .url("https://opensource.org/licenses/MIT"),
+                    ),
+            ).servers(
                 listOf(
                     Server()
                         .url("http://localhost:8080")
-                        .description("開発環境サーバー")
-                )
+                        .description("開発環境サーバー"),
+                ),
             )
-    }
 }

@@ -6,5 +6,5 @@ package com.example.springdddexample.application.dto.user
 data class UpdateUserCommand(
     val id: String,
     val name: String,
-    val email: String
+    val email: String,
 )

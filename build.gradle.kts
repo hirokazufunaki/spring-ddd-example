@@ -4,6 +4,7 @@ plugins {
     kotlin("plugin.jpa") version "1.9.25"
     id("org.springframework.boot") version "3.5.6"
     id("io.spring.dependency-management") version "1.1.7"
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     jacoco
 }
 
@@ -36,6 +37,7 @@ dependencies {
 }
 
 kotlin {
+    jvmToolchain(21)
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }
@@ -59,20 +61,22 @@ tasks.jacocoTestReport {
         html.required = true
         html.outputLocation = layout.buildDirectory.dir("reports/jacoco/test/html")
     }
-    
+
     // Exclude generated classes and configuration classes
     classDirectories.setFrom(
-        files(classDirectories.files.map {
-            fileTree(it) {
-                exclude(
-                    "**/SpringDddExampleApplication*",
-                    "**/config/**",
-                    "**/*Config*",
-                    "**/dto/**",
-                    "**/entity/**"
-                )
-            }
-        })
+        files(
+            classDirectories.files.map {
+                fileTree(it) {
+                    exclude(
+                        "**/SpringDddExampleApplication*",
+                        "**/config/**",
+                        "**/*Config*",
+                        "**/dto/**",
+                        "**/entity/**",
+                    )
+                }
+            },
+        ),
     )
 }
 
@@ -84,7 +88,7 @@ tasks.jacocoTestCoverageVerification {
                 minimum = "0.80".toBigDecimal()
             }
         }
-        
+
         rule {
             element = "CLASS"
             limit {
@@ -92,17 +96,43 @@ tasks.jacocoTestCoverageVerification {
                 value = "COVEREDRATIO"
                 minimum = "0.70".toBigDecimal()
             }
-            excludes = listOf(
-                "*.SpringDddExampleApplication*",
-                "*.config.*",
-                "*.*Config*",
-                "*.dto.*",
-                "*.entity.*"
-            )
+            excludes =
+                listOf(
+                    "*.SpringDddExampleApplication*",
+                    "*.config.*",
+                    "*.*Config*",
+                    "*.dto.*",
+                    "*.entity.*",
+                )
         }
     }
 }
 
 tasks.check {
     dependsOn(tasks.jacocoTestCoverageVerification)
+}
+
+// Ktlint Configuration
+ktlint {
+    version = "1.5.0"
+    android = false
+    ignoreFailures = false
+    reporters {
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.PLAIN)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.CHECKSTYLE)
+        reporter(org.jlleitschuh.gradle.ktlint.reporter.ReporterType.HTML)
+    }
+    filter {
+        exclude("**/generated/**")
+        exclude("**/build/**")
+    }
+}
+
+// Ktlint tasks integration
+tasks.named("check") {
+    dependsOn("ktlintCheck")
+}
+
+tasks.named("ktlintCheck") {
+    dependsOn("ktlintFormat")
 }
