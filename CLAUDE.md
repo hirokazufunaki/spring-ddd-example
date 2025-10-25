@@ -22,6 +22,12 @@
 - `./gradlew test --tests "ClassName"` - 特定のテストクラスを実行
 - `./gradlew test --tests "ClassName.methodName"` - 特定のテストメソッドを実行
 
+### カバレッジレポート
+- `./gradlew jacocoTestReport` - JaCoCoカバレッジレポートを生成
+- `./gradlew jacocoTestCoverageVerification` - カバレッジ検証を実行
+- `./gradlew check` - テスト実行とカバレッジ検証を含む品質チェック
+- レポート場所: `build/reports/jacoco/test/html/index.html`
+
 ## アーキテクチャ概要
 
 コードベースは関心の分離を厳密に行う階層化されたヘキサゴナルアーキテクチャに従います：
@@ -66,3 +72,24 @@
 - リポジトリインターフェースはドメイン層で定義し、インフラストラクチャで実装
 - コマンドは内向きに、結果は外向きに層を通って流れる
 - JPAエンティティはドメインエンティティとは分離し、明示的なマッピングを行う
+
+## パッケージ構造
+
+プロジェクトのパッケージは `com.example.springdddexample` をベースとしています：
+
+```
+com.example.springdddexample/
+├── domain/
+│   ├── model/
+│   │   └── user/          # User集約
+│   └── shared/            # 共有カーネル
+├── application/
+│   ├── service/user/      # アプリケーションサービス
+│   └── dto/user/          # コマンド・結果DTO
+├── infrastructure/
+│   └── persistence/jpa/   # JPA実装
+└── presentation/
+    ├── rest/user/         # RESTコントローラー
+    ├── dto/user/          # リクエスト・レスポンスDTO
+    └── exception/         # 例外処理
+```
