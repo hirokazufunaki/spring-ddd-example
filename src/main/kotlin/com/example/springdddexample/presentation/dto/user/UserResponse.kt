@@ -1,6 +1,6 @@
 package com.example.springdddexample.presentation.dto.user
 
-import com.example.springdddexample.application.dto.user.UserResult
+import com.example.springdddexample.application.dto.user.UserOutput
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
@@ -22,15 +22,15 @@ data class UserResponse(
 ) {
     companion object {
         /**
-         * UserResultからUserResponseを生成するファクトリ関数
+         * UserOutputからUserResponseを生成するファクトリ関数
          */
-        fun from(userResult: UserResult): UserResponse =
+        fun from(userOutput: UserOutput): UserResponse =
             UserResponse(
-                id = userResult.id,
-                name = userResult.name,
-                email = userResult.email,
-                createdAt = userResult.createdAt,
-                updatedAt = userResult.updatedAt,
+                id = userOutput.id,
+                name = userOutput.name,
+                email = userOutput.email,
+                createdAt = userOutput.createdAt,
+                updatedAt = userOutput.updatedAt,
             )
     }
 }

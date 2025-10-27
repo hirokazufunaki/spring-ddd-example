@@ -4,10 +4,10 @@ import com.example.springdddexample.domain.model.user.User
 import java.time.LocalDateTime
 
 /**
- * ユーザー結果DTO
+ * ユーザー出力DTO
  * アプリケーションサービスからプレゼンテーション層への結果データ
  */
-data class UserResult(
+data class UserOutput(
     val id: String,
     val name: String,
     val email: String,
@@ -16,10 +16,10 @@ data class UserResult(
 ) {
     companion object {
         /**
-         * ドメインオブジェクトからUserResultを生成
+         * ドメインオブジェクトからUserOutputを生成
          */
-        fun from(user: User): UserResult =
-            UserResult(
+        fun from(user: User): UserOutput =
+            UserOutput(
                 id = user.id.value,
                 name = user.name.value,
                 email = user.email.value,

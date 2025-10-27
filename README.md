@@ -121,15 +121,15 @@ src/
     │               │   └── dto/
     │               │       │
     │               │       ├── user/
-    │               │       │   ├── CreateUserCommand.kt
-    │               │       │   ├── UpdateUserCommand.kt
-    │               │       │   └── UserResult.kt
+    │               │       │   ├── CreateUserInput.kt
+    │               │       │   ├── UpdateUserInput.kt
+    │               │       │   └── UserOutput.kt
     │               │       │
     │               │       └── task/
-    │               │           ├── CreateTaskCommand.kt
-    │               │           ├── UpdateTaskCommand.kt
-    │               │           ├── CompleteTaskCommand.kt
-    │               │           └── TaskResult.kt
+    │               │           ├── CreateTaskInput.kt
+    │               │           ├── UpdateTaskInput.kt
+    │               │           ├── CompleteTaskInput.kt
+    │               │           └── TaskOutput.kt
     │               │
     │               ├── infrastructure/                   # インフラストラクチャ層
     │               │   │
@@ -179,13 +179,13 @@ src/
     │                   ├── dto/
     │                   │   │
     │                   │   ├── user/
-    │                   │   │   ├── CreateUserRequest.kt      # toCommand()拡張関数を含む
-    │                   │   │   ├── UpdateUserRequest.kt      # toCommand()拡張関数を含む
+    │                   │   │   ├── CreateUserRequest.kt      # toInput()拡張関数を含む
+    │                   │   │   ├── UpdateUserRequest.kt      # toInput()拡張関数を含む
     │                   │   │   └── UserResponse.kt           # from()ファクトリ関数を含む
     │                   │   │
     │                   │   └── task/
-    │                   │       ├── CreateTaskRequest.kt      # toCommand()拡張関数を含む
-    │                   │       ├── UpdateTaskRequest.kt      # toCommand()拡張関数を含む
+    │                   │       ├── CreateTaskRequest.kt      # toInput()拡張関数を含む
+    │                   │       ├── UpdateTaskRequest.kt      # toInput()拡張関数を含む
     │                   │       ├── TaskResponse.kt           # from()ファクトリ関数を含む
     │                   │       └── TaskListResponse.kt       # from()ファクトリ関数を含む
     │                   │

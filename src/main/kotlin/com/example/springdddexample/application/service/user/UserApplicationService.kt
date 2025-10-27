@@ -1,8 +1,8 @@
 package com.example.springdddexample.application.service.user
 
-import com.example.springdddexample.application.dto.user.CreateUserCommand
-import com.example.springdddexample.application.dto.user.UpdateUserCommand
-import com.example.springdddexample.application.dto.user.UserResult
+import com.example.springdddexample.application.dto.user.CreateUserInput
+import com.example.springdddexample.application.dto.user.UpdateUserInput
+import com.example.springdddexample.application.dto.user.UserOutput
 import com.example.springdddexample.domain.model.user.Email
 import com.example.springdddexample.domain.model.user.User
 import com.example.springdddexample.domain.model.user.UserId
@@ -25,71 +25,71 @@ class UserApplicationService(
     /**
      * ユーザーを作成する
      */
-    fun createUser(command: CreateUserCommand): UserResult {
-        val email = Email(command.email)
+    fun createUser(input: CreateUserInput): UserOutput {
+        val email = Email(input.email)
 
         // メールアドレスの重複チェック
         if (userRepository.existsByEmail(email)) {
-            throw BusinessRuleViolationException("このメールアドレスは既に使用されています: ${command.email}")
+            throw BusinessRuleViolationException("このメールアドレスは既に使用されています: ${input.email}")
         }
 
         val user =
             User.create(
-                name = UserName(command.name),
+                name = UserName(input.name),
                 email = email,
             )
 
         val savedUser = userRepository.save(user)
-        return UserResult.from(savedUser)
+        return UserOutput.from(savedUser)
     }
 
     /**
      * ユーザーを更新する
      */
-    fun updateUser(command: UpdateUserCommand): UserResult {
-        val userId = UserId(command.id)
+    fun updateUser(input: UpdateUserInput): UserOutput {
+        val userId = UserId(input.id)
         val existingUser =
             userRepository.findById(userId)
-                ?: throw NotFoundException("ユーザーが見つかりません: ${command.id}")
+                ?: throw NotFoundException("ユーザーが見つかりません: ${input.id}")
 
-        val email = Email(command.email)
+        val email = Email(input.email)
 
         // メールアドレスの重複チェック（自分以外）
         if (userRepository.existsByEmail(email, userId)) {
-            throw BusinessRuleViolationException("このメールアドレスは既に使用されています: ${command.email}")
+            throw BusinessRuleViolationException("このメールアドレスは既に使用されています: ${input.email}")
         }
 
         val updatedUser =
             existingUser.updateProfile(
-                newName = UserName(command.name),
+                newName = UserName(input.name),
                 newEmail = email,
             )
 
         val savedUser = userRepository.save(updatedUser)
-        return UserResult.from(savedUser)
+        return UserOutput.from(savedUser)
     }
 
     /**
      * ユーザーを取得する
      */
     @Transactional(readOnly = true)
-    fun getUser(id: String): UserResult {
+    fun getUser(id: String): UserOutput {
         val userId = UserId(id)
         val user =
             userRepository.findById(userId)
                 ?: throw NotFoundException("ユーザーが見つかりません: $id")
 
-        return UserResult.from(user)
+        return UserOutput.from(user)
     }
 
     /**
      * すべてのユーザーを取得する
      */
     @Transactional(readOnly = true)
-    fun getAllUsers(): List<UserResult> =
+    fun getAllUsers(): List<UserOutput> =
         userRepository
             .findAll()
-            .map { UserResult.from(it) }
+            .map { UserOutput.from(it) }
 
     /**
      * ユーザーを削除する

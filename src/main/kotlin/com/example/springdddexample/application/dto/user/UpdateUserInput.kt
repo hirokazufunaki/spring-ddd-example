@@ -1,9 +1,10 @@
 package com.example.springdddexample.application.dto.user
 
 /**
- * ユーザー作成コマンド
+ * ユーザー更新入力DTO
  */
-data class CreateUserCommand(
+data class UpdateUserInput(
+    val id: String,
     val name: String,
     val email: String,
 )

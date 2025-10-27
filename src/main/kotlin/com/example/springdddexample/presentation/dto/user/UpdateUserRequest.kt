@@ -1,6 +1,6 @@
 package com.example.springdddexample.presentation.dto.user
 
-import com.example.springdddexample.application.dto.user.UpdateUserCommand
+import com.example.springdddexample.application.dto.user.UpdateUserInput
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -18,10 +18,10 @@ data class UpdateUserRequest(
     val email: String,
 ) {
     /**
-     * UpdateUserCommandへ変換する拡張関数
+     * UpdateUserInputへ変換する拡張関数
      */
-    fun toCommand(id: String): UpdateUserCommand =
-        UpdateUserCommand(
+    fun toInput(id: String): UpdateUserInput =
+        UpdateUserInput(
             id = id,
             name = this.name,
             email = this.email,

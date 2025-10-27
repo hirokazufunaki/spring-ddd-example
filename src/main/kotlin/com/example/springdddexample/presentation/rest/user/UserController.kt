@@ -60,7 +60,7 @@ class UserController(
     fun createUser(
         @Valid @RequestBody request: CreateUserRequest,
     ): ResponseEntity<UserResponse> {
-        val userResult = userApplicationService.createUser(request.toCommand())
+        val userResult = userApplicationService.createUser(request.toInput())
         val response = UserResponse.from(userResult)
         return ResponseEntity.status(HttpStatus.CREATED).body(response)
     }
@@ -154,7 +154,7 @@ class UserController(
         @PathVariable id: String,
         @Valid @RequestBody request: UpdateUserRequest,
     ): ResponseEntity<UserResponse> {
-        val userResult = userApplicationService.updateUser(request.toCommand(id))
+        val userResult = userApplicationService.updateUser(request.toInput(id))
         val response = UserResponse.from(userResult)
         return ResponseEntity.ok(response)
     }

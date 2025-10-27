@@ -1,6 +1,6 @@
 package com.example.springdddexample.presentation.dto.user
 
-import com.example.springdddexample.application.dto.user.CreateUserCommand
+import com.example.springdddexample.application.dto.user.CreateUserInput
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotBlank
@@ -22,10 +22,10 @@ data class CreateUserRequest(
     val email: String,
 ) {
     /**
-     * CreateUserCommandへ変換する拡張関数
+     * CreateUserInputへ変換する拡張関数
      */
-    fun toCommand(): CreateUserCommand =
-        CreateUserCommand(
+    fun toInput(): CreateUserInput =
+        CreateUserInput(
             name = this.name,
             email = this.email,
         )
