@@ -82,37 +82,40 @@ tasks.jacocoTestReport {
 
 tasks.jacocoTestCoverageVerification {
     dependsOn(tasks.jacocoTestReport)
+
+    val commonExcludes =
+        listOf(
+            "*.SpringDddExampleApplication*",
+            "*.config.*",
+            "*.*Config*",
+            "*.dto.*",
+            "*.entity.*",
+        )
+
     violationRules {
         rule {
             limit {
+                counter = "LINE"
+                value = "COVEREDRATIO"
                 minimum = "0.30".toBigDecimal()
             }
+            excludes = commonExcludes
         }
 
         rule {
-            element = "CLASS"
             limit {
                 counter = "BRANCH"
                 value = "COVEREDRATIO"
                 minimum = "0.30".toBigDecimal()
             }
-            excludes =
-                listOf(
-                    "*.SpringDddExampleApplication*",
-                    "*.config.*",
-                    "*.*Config*",
-                    "*.dto.*",
-                    "*.entity.*",
-                )
+            excludes = commonExcludes
         }
     }
 }
 
-// Temporarily disable coverage verification to allow build to pass
-// TODO: Add integration tests to improve coverage
-// tasks.check {
-//     dependsOn(tasks.jacocoTestCoverageVerification)
-// }
+tasks.check {
+    dependsOn(tasks.jacocoTestCoverageVerification)
+}
 
 // Ktlint Configuration
 ktlint {
