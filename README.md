@@ -21,17 +21,8 @@
 # プロジェクトのビルド
 ./gradlew build
 
-# アプリケーションの実行
-./gradlew bootRun
-
 # テストの実行
 ./gradlew test
-
-# 特定のテストクラスを実行
-./gradlew test --tests "UserTest"
-
-# 特定のテストメソッドを実行
-./gradlew test --tests "UserTest.正常な値でUserが作成できること"
 
 # カバレッジレポートの生成
 ./gradlew jacocoTestReport
