@@ -63,6 +63,17 @@
 - `PUT /api/users/{id}` - ユーザー更新
 - `DELETE /api/users/{id}` - ユーザー削除
 
+#### タスク管理
+- `GET /api/tasks` - 全タスク取得
+- `GET /api/tasks/{id}` - タスク詳細取得
+- `POST /api/tasks` - タスク作成
+- `PUT /api/tasks/{id}` - タスク更新
+- `DELETE /api/tasks/{id}` - タスク削除
+- `POST /api/tasks/{id}/complete` - タスク完了
+- `POST /api/tasks/{id}/start` - タスク開始
+- `POST /api/tasks/{id}/cancel` - タスクキャンセル
+- `GET /api/tasks/user/{userId}` - ユーザーのタスク取得（オプション: `?status=NOT_STARTED|IN_PROGRESS|COMPLETED|CANCELLED`）
+
 ### レポート
 
 - **テストレポート**: `build/reports/tests/test/index.html`

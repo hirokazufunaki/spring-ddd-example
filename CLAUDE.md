@@ -87,15 +87,120 @@
 com.example.springdddexample/
 ├── domain/
 │   ├── model/
-│   │   └── user/          # User集約
+│   │   ├── user/          # User集約
+│   │   │   ├── User.kt
+│   │   │   ├── UserId.kt
+│   │   │   ├── UserName.kt
+│   │   │   ├── Email.kt
+│   │   │   └── UserRepository.kt
+│   │   └── task/          # Task集約
+│   │   │   ├── Task.kt
+│   │   │   ├── TaskId.kt
+│   │   │   ├── TaskName.kt
+│   │   │   ├── TaskStatus.kt
+│   │   │   └── TaskRepository.kt
 │   └── shared/            # 共有カーネル
+│       └── DomainException.kt
 ├── application/
-│   ├── service/user/      # アプリケーションサービス
-│   └── dto/user/          # コマンド・結果DTO
+│   ├── service/
+│   │   ├── user/          # ユーザーアプリケーションサービス
+│   │   │   └── UserApplicationService.kt
+│   │   └── task/          # タスクアプリケーションサービス
+│   │       └── TaskApplicationService.kt
+│   └── dto/
+│       ├── user/          # ユーザーコマンド・結果DTO
+│       │   ├── CreateUserInput.kt
+│       │   ├── UpdateUserInput.kt
+│       │   └── UserOutput.kt
+│       └── task/          # タスクコマンド・結果DTO
+│           ├── CreateTaskInput.kt
+│           ├── UpdateTaskInput.kt
+│           ├── CompleteTaskInput.kt
+│           └── TaskOutput.kt
 ├── infrastructure/
-│   └── persistence/jpa/   # JPA実装
+│   └── persistence/jpa/
+│       ├── entity/
+│       │   ├── user/
+│       │   │   └── UserJpaEntity.kt
+│       │   └── task/
+│       │       └── TaskJpaEntity.kt
+│       ├── repository/
+│       │   ├── user/
+│       │   │   └── UserJpaRepository.kt
+│       │   └── task/
+│       │       └── TaskJpaRepository.kt
+│       ├── adapter/
+│       │   ├── user/
+│       │   │   └── UserRepositoryAdapter.kt
+│       │   └── task/
+│       │       └── TaskRepositoryAdapter.kt
+│       ├── mapper/
+│       │   ├── user/
+│       │   │   └── UserMapper.kt
+│       │   └── task/
+│       │       └── TaskMapper.kt
+│       └── config/
+│           └── JpaConfig.kt
 └── presentation/
-    ├── rest/user/         # RESTコントローラー
-    ├── dto/user/          # リクエスト・レスポンスDTO
-    └── exception/         # 例外処理
+    ├── rest/
+    │   ├── user/          # ユーザーRESTコントローラー
+    │   │   └── UserController.kt
+    │   └── task/          # タスクRESTコントローラー
+    │       └── TaskController.kt
+    ├── dto/
+    │   ├── user/          # ユーザーリクエスト・レスポンスDTO
+    │   │   ├── CreateUserRequest.kt
+    │   │   ├── UpdateUserRequest.kt
+    │   │   └── UserResponse.kt
+    │   └── task/          # タスクリクエスト・レスポンスDTO
+    │       ├── CreateTaskRequest.kt
+    │       ├── UpdateTaskRequest.kt
+    │       ├── TaskResponse.kt
+    │       └── TaskListResponse.kt
+    ├── exception/
+    │   ├── GlobalExceptionHandler.kt
+    │   └── ErrorResponse.kt
+    └── config/
+        ├── WebConfig.kt
+        └── OpenApiConfig.kt
 ```
+
+## Task 集約の実装内容
+
+### Task ドメイン層
+- **Task.kt**: 集約ルート。タスク情報とステート遷移を管理
+  - メソッド: `complete()`, `start()`, `cancel()`, `updateTask()`, `updateName()`, `updateDescription()`
+  - ビジネスルール: 状態遷移の検証（完了済みから進行中への遷移は不可など）
+- **TaskId.kt**: ULID形式のタスクID（26文字の不変値オブジェクト）
+- **TaskName.kt**: 1～255文字のタスク名（不変値オブジェクト）
+- **TaskStatus.kt**: タスク状態列挙型
+  - 値: `NOT_STARTED`（未着手）, `IN_PROGRESS`（進行中）, `COMPLETED`（完了）, `CANCELLED`（キャンセル）
+- **TaskRepository.kt**: リポジトリインターフェース
+  - メソッド: `save()`, `findById()`, `findByUserId()`, `findByUserIdAndStatus()`, `findAll()`, `delete()`, `deleteByUserId()`, `existsById()`
+
+### Task アプリケーション層
+- **TaskApplicationService.kt**: ユースケース統制
+  - メソッド: `createTask()`, `updateTask()`, `getTask()`, `getAllTasks()`, `getTasksByUserId()`, `getTasksByUserIdAndStatus()`, `completeTask()`, `startTask()`, `cancelTask()`, `deleteTask()`, `deleteTasksByUserId()`
+- **DTOクラス**:
+  - `CreateTaskInput`: タスク作成コマンド
+  - `UpdateTaskInput`: タスク更新コマンド
+  - `CompleteTaskInput`: タスク完了コマンド
+  - `TaskOutput`: タスク出力DTO
+
+### Task インフラストラクチャ層
+- **TaskJpaEntity.kt**: JPA永続化エンティティ
+- **TaskStatusEntity.kt**: JPA用の状態列挙型
+- **TaskJpaRepository.kt**: Spring Data JPA リポジトリインターフェース
+- **TaskRepositoryAdapter.kt**: ドメインリポジトリの実装
+- **TaskMapper.kt**: ドメインオブジェクト⇔JPAエンティティ間の変換
+
+### Task プレゼンテーション層
+- **TaskController.kt**: REST API エンドポイント（10個）
+  - 基本CRUD: `POST /api/tasks`, `GET /api/tasks/{id}`, `PUT /api/tasks/{id}`, `DELETE /api/tasks/{id}`
+  - リスト取得: `GET /api/tasks`, `GET /api/tasks/user/{userId}` (ステータスフィルタリング対応)
+  - アクション: `POST /api/tasks/{id}/complete`, `POST /api/tasks/{id}/start`, `POST /api/tasks/{id}/cancel`
+- **リクエスト/レスポンスDTO**:
+  - `CreateTaskRequest`: バリデーション付きリクエスト
+  - `UpdateTaskRequest`: バリデーション付きリクエスト
+  - `TaskResponse`: レスポンスDTO
+  - `TaskListResponse`: タスク一覧レスポンスDTO
