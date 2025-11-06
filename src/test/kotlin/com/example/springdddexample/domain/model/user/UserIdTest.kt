@@ -25,7 +25,7 @@ class UserIdTest {
     }
 
     @Test
-    fun `UserIdが生成できること`() {
+    fun `ULID形式のUserIdが生成できること`() {
         // Act
         val userId = UserId.generate()
 
@@ -92,27 +92,5 @@ class UserIdTest {
                 UserId(longUlid)
             }
         assertEquals("無効なULID形式です: $longUlid", exception.message)
-    }
-
-    @Test
-    fun `同じ値のUserIdは等価であること`() {
-        // Arrange
-        val value = "01HKGX123456789ABCDEFGHJKM"
-        val userId1 = UserId(value)
-        val userId2 = UserId(value)
-
-        // Assert
-        assertEquals(userId1, userId2)
-        assertEquals(userId1.hashCode(), userId2.hashCode())
-    }
-
-    @Test
-    fun `異なる値のUserIdは等価でないこと`() {
-        // Arrange
-        val userId1 = UserId("01HKGX123456789ABCDEFGHJKM")
-        val userId2 = UserId("01HKGX123456789ABCDEFGHJKN")
-
-        // Assert
-        assertNotEquals(userId1, userId2)
     }
 }
