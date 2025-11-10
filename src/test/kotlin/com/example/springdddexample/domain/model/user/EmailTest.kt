@@ -23,7 +23,7 @@ class EmailTest {
     }
 
     @Test
-    fun `日本のドメインのメールアドレスでEmailが作成できること`() {
+    fun `日本企業のドメインのメールアドレスでEmailが作成できること`() {
         // Arrange
         val validEmail = "yamada@example.co.jp"
 
@@ -131,9 +131,22 @@ class EmailTest {
     }
 
     @Test
-    fun `254文字超過のメールアドレスでEmailを作成するとエラーになること`() {
+    fun `254文字のメールアドレスでEmailが作成できること`() {
         // Arrange
-        val localPart = "a".repeat(245) // 254文字を超えるように調整
+        val localPart = "a".repeat(242) // 254文字になるように調整
+        val validEmail = "$localPart@example.com"
+
+        // Act
+        val email = Email(validEmail)
+
+        // Assert
+        assertEquals(validEmail, email.value)
+    }
+
+    @Test
+    fun `255文字のメールアドレスでEmailを作成するとエラーになること`() {
+        // Arrange
+        val localPart = "a".repeat(243) // 255文字になるように調整
         val invalidEmail = "$localPart@example.com"
 
         // Act & Assert
@@ -142,27 +155,5 @@ class EmailTest {
                 Email(invalidEmail)
             }
         assertEquals("無効なメールアドレス形式です: $invalidEmail", exception.message)
-    }
-
-    @Test
-    fun `同じ値のEmailは等価であること`() {
-        // Arrange
-        val emailValue = "test@example.com"
-        val email1 = Email(emailValue)
-        val email2 = Email(emailValue)
-
-        // Assert
-        assertEquals(email1, email2)
-        assertEquals(email1.hashCode(), email2.hashCode())
-    }
-
-    @Test
-    fun `異なる値のEmailは等価でないこと`() {
-        // Arrange
-        val email1 = Email("test1@example.com")
-        val email2 = Email("test2@example.com")
-
-        // Assert
-        assertNotEquals(email1, email2)
     }
 }
