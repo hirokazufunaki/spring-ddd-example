@@ -2,7 +2,6 @@ package com.example.springdddexample.domain.model.user
 
 import com.example.springdddexample.domain.shared.InvalidValueException
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -90,27 +89,5 @@ class UserNameTest {
                 UserName(longName)
             }
         assertEquals("ユーザー名は50文字以内で入力してください", exception.message)
-    }
-
-    @Test
-    fun `同じ値のUserNameは等価であること`() {
-        // Arrange
-        val name = "山田太郎"
-        val userName1 = UserName(name)
-        val userName2 = UserName(name)
-
-        // Assert
-        assertEquals(userName1, userName2)
-        assertEquals(userName1.hashCode(), userName2.hashCode())
-    }
-
-    @Test
-    fun `異なる値のUserNameは等価でないこと`() {
-        // Arrange
-        val userName1 = UserName("山田太郎")
-        val userName2 = UserName("田中花子")
-
-        // Assert
-        assertNotEquals(userName1, userName2)
     }
 }

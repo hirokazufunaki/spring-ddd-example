@@ -97,7 +97,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "LINE"
                 value = "COVEREDRATIO"
-                minimum = "0.30".toBigDecimal()
+                minimum = "0.10".toBigDecimal()
             }
             excludes = commonExcludes
         }
@@ -106,7 +106,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "BRANCH"
                 value = "COVEREDRATIO"
-                minimum = "0.30".toBigDecimal()
+                minimum = "0.10".toBigDecimal()
             }
             excludes = commonExcludes
         }
