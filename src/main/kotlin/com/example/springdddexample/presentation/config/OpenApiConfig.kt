@@ -20,7 +20,7 @@ class OpenApiConfig {
             .info(
                 Info()
                     .title("Spring DDD Example API")
-                    .description("ドメイン駆動設計とヘキサゴナルアーキテクチャを使用したタスク管理サービスAPI")
+                    .description("ドメイン駆動設計とレイヤードアーキテクチャを使用したタスク管理サービスAPI")
                     .version("1.0.0")
                     .contact(
                         Contact()

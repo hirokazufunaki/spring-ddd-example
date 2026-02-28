@@ -3,7 +3,7 @@ package com.example.springdddexample.domain.model.task
 import com.example.springdddexample.domain.model.user.UserId
 
 /**
- * Taskリポジトリインターフェース（ポート）
+ * Taskリポジトリインターフェース
  * ドメイン層でデータ永続化の契約を定義
  */
 interface TaskRepository {

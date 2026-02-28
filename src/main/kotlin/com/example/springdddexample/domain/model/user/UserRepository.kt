@@ -1,7 +1,7 @@
 package com.example.springdddexample.domain.model.user
 
 /**
- * Userリポジトリインターフェース（ポート）
+ * Userリポジトリインターフェース
  * ドメイン層でデータ永続化の契約を定義
  */
 interface UserRepository {

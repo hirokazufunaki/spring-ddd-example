@@ -2,7 +2,7 @@
 
 ## 概要
 
-シンプルなタスク管理サービスの API です。ドメイン駆動設計とヘキサゴナルアーキテクチャをベースにしています。
+シンプルなタスク管理サービスの API です。ドメイン駆動設計（DDD）とレイヤードアーキテクチャをベースにしています。
 
 ## 機能
 
@@ -96,13 +96,13 @@ src/
                     │   │   │   ├── UserId.kt             # 値オブジェクト（ULID）
                     │   │   │   ├── UserName.kt           # 値オブジェクト
                     │   │   │   ├── Email.kt              # 値オブジェクト
-                    │   │   │   └── UserRepository.kt     # リポジトリIF（ポート）
+                    │   │   │   └── UserRepository.kt     # リポジトリIF
                     │   │   └── task/                     # Task集約
                     │   │       ├── Task.kt               # 集約ルート
                     │   │       ├── TaskId.kt             # 値オブジェクト（ULID）
                     │   │       ├── TaskName.kt           # 値オブジェクト
                     │   │       ├── TaskStatus.kt         # 値オブジェクト（Enum）
-                    │   │       └── TaskRepository.kt     # リポジトリIF（ポート）
+                    │   │       └── TaskRepository.kt     # リポジトリIF
                     │   └── shared/                       # 共有カーネル
                     │       └── DomainException.kt        # ドメイン例外の基底クラス
                     ├── application/                      # アプリケーション層（ユースケース）
