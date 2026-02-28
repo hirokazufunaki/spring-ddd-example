@@ -1,9 +1,7 @@
 package com.example.springdddexample.presentation.config
 
 import io.swagger.v3.oas.models.OpenAPI
-import io.swagger.v3.oas.models.info.Contact
 import io.swagger.v3.oas.models.info.Info
-import io.swagger.v3.oas.models.info.License
 import io.swagger.v3.oas.models.servers.Server
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,16 +19,7 @@ class OpenApiConfig {
                 Info()
                     .title("Spring DDD Example API")
                     .description("ドメイン駆動設計とレイヤードアーキテクチャを使用したタスク管理サービスAPI")
-                    .version("1.0.0")
-                    .contact(
-                        Contact()
-                            .name("Spring DDD Example Team")
-                            .email("example@example.com"),
-                    ).license(
-                        License()
-                            .name("MIT License")
-                            .url("https://opensource.org/licenses/MIT"),
-                    ),
+                    .version("1.0.0"),
             ).servers(
                 listOf(
                     Server()
