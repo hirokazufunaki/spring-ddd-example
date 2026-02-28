@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
  */
 @Schema(description = "タスク一覧情報")
 data class TaskListResponse(
-    @Schema(description = "タスク一覧")
+    @field:Schema(description = "タスク一覧")
     val tasks: List<TaskResponse>,
 ) {
     companion object {

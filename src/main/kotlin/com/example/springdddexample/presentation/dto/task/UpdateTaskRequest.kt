@@ -12,10 +12,10 @@ import jakarta.validation.constraints.Size
 data class UpdateTaskRequest(
     @field:NotBlank(message = "タスク名は必須です")
     @field:Size(min = 1, max = 255, message = "タスク名は1文字以上255文字以内で入力してください")
-    @Schema(description = "タスク名", example = "プロジェクトAの開発", minLength = 1, maxLength = 255)
+    @field:Schema(description = "タスク名", example = "プロジェクトAの開発", minLength = 1, maxLength = 255)
     val name: String,
     @field:Size(max = 2000, message = "説明は2000文字以内で入力してください")
-    @Schema(description = "タスク説明", example = "プロジェクトAの開発タスク", maxLength = 2000)
+    @field:Schema(description = "タスク説明", example = "プロジェクトAの開発タスク", maxLength = 2000)
     val description: String = "",
 ) {
     /**

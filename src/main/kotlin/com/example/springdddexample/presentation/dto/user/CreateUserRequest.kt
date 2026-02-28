@@ -13,12 +13,12 @@ import jakarta.validation.constraints.Size
 data class CreateUserRequest(
     @field:NotBlank(message = "ユーザー名は必須です")
     @field:Size(min = 2, max = 50, message = "ユーザー名は2文字以上50文字以内で入力してください")
-    @Schema(description = "ユーザー名", example = "山田太郎", minLength = 2, maxLength = 50)
+    @field:Schema(description = "ユーザー名", example = "山田太郎", minLength = 2, maxLength = 50)
     val name: String,
     @field:NotBlank(message = "メールアドレスは必須です")
     @field:Email(message = "正しいメールアドレス形式で入力してください")
     @field:Size(max = 254, message = "メールアドレスは254文字以内で入力してください")
-    @Schema(description = "メールアドレス", example = "yamada@example.com", format = "email", maxLength = 254)
+    @field:Schema(description = "メールアドレス", example = "yamada@example.com", format = "email", maxLength = 254)
     val email: String,
 ) {
     /**
