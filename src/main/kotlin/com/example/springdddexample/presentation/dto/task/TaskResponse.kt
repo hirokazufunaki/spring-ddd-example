@@ -9,19 +9,19 @@ import java.time.LocalDateTime
  */
 @Schema(description = "タスク情報")
 data class TaskResponse(
-    @Schema(description = "タスクID", example = "01HKGX123456789ABCDEFGHIJ")
+    @field:Schema(description = "タスクID", example = "01HKGX123456789ABCDEFGHIJ")
     val id: String,
-    @Schema(description = "ユーザーID", example = "01HKGX123456789ABCDEFGHIJ")
+    @field:Schema(description = "ユーザーID", example = "01HKGX123456789ABCDEFGHIJ")
     val userId: String,
-    @Schema(description = "タスク名", example = "プロジェクトAの開発")
+    @field:Schema(description = "タスク名", example = "プロジェクトAの開発")
     val name: String,
-    @Schema(description = "タスク説明", example = "プロジェクトAの開発タスク")
+    @field:Schema(description = "タスク説明", example = "プロジェクトAの開発タスク")
     val description: String,
-    @Schema(description = "タスク状態", example = "未着手")
+    @field:Schema(description = "タスク状態", example = "未着手")
     val status: String,
-    @Schema(description = "作成日時", example = "2024-01-01T00:00:00")
+    @field:Schema(description = "作成日時")
     val createdAt: LocalDateTime,
-    @Schema(description = "更新日時", example = "2024-01-01T00:00:00")
+    @field:Schema(description = "更新日時")
     val updatedAt: LocalDateTime,
 ) {
     companion object {

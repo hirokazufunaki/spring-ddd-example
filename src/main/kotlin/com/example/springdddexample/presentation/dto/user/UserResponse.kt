@@ -9,15 +9,15 @@ import java.time.LocalDateTime
  */
 @Schema(description = "ユーザー情報")
 data class UserResponse(
-    @Schema(description = "ユーザーID", example = "01HKGX123456789ABCDEFGHIJ")
+    @field:Schema(description = "ユーザーID", example = "01HKGX123456789ABCDEFGHIJ")
     val id: String,
-    @Schema(description = "ユーザー名", example = "山田太郎")
+    @field:Schema(description = "ユーザー名", example = "山田太郎")
     val name: String,
-    @Schema(description = "メールアドレス", example = "yamada@example.com")
+    @field:Schema(description = "メールアドレス", example = "yamada@example.com")
     val email: String,
-    @Schema(description = "作成日時", example = "2024-01-01T00:00:00")
+    @field:Schema(description = "作成日時")
     val createdAt: LocalDateTime,
-    @Schema(description = "更新日時", example = "2024-01-01T00:00:00")
+    @field:Schema(description = "更新日時")
     val updatedAt: LocalDateTime,
 ) {
     companion object {
